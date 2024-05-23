@@ -6,7 +6,7 @@
  */
 
 import { NavigationContainer } from '@react-navigation/native'
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   StatusBar,
   useColorScheme
@@ -16,11 +16,8 @@ import BootSplash from 'react-native-bootsplash'
 
 function App () {
   const isDarkMode = useColorScheme() === 'dark'
-  useEffect(() => {
-    BootSplash.hide({ fade: true })
-  }, [])
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={() => BootSplash.hide({ fade: true })}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <MainNavigator />
     </NavigationContainer>
