@@ -3,6 +3,8 @@ import { Camera, CameraType } from 'react-native-camera-kit'
 import styles from '../../styles/CameraStyle'
 import { useRef } from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { getBase64FromImage } from '../../utils/Images'
+import { identifyImage } from '../../services/ClarifaiApi'
 
 function CustomCamera () {
   const cameraRef = useRef(null)
@@ -10,6 +12,11 @@ function CustomCamera () {
   const handleTakePicture = async () => {
     if (cameraRef.current) {
       const image = await cameraRef.current.capture()
+      if (image) {
+        const base64 = await getBase64FromImage(image.uri)
+        const res = await identifyImage(base64)
+        // console.log(res)
+      }
       console.log(image)
     }
   }
