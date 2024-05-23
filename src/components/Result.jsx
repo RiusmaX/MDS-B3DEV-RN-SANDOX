@@ -1,4 +1,4 @@
-import { Button, FlatList, ScrollView, Text, View } from 'react-native'
+import { Button, FlatList, Text, View } from 'react-native'
 import styles from '../styles/ResultStyle'
 
 function ResultItem ({ item }) {
