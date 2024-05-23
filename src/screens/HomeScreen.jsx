@@ -11,7 +11,7 @@ function HomeScreen () {
     <View style={styles.container}>
       {
         result
-          ? <Result result={result} />
+          ? <Result result={result} onExit={() => setResult(null)} />
           : <CustomCamera onResult={setResult} />
       }
     </View>

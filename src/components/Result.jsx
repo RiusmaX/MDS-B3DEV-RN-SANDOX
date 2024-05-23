@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, Text, View } from 'react-native'
+import { Button, FlatList, ScrollView, Text, View } from 'react-native'
 import styles from '../styles/ResultStyle'
 
 function ResultItem ({ item }) {
@@ -18,19 +18,27 @@ function ResultItem ({ item }) {
   )
 }
 
-function Result ({ result }) {
+function Result ({ result, onExit }) {
   const concepts = result?.outputs[0]?.data?.concepts
   return (
-    <ScrollView style={styles.container}>
+    <>
       <FlatList
+        style={styles.container}
         data={concepts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <ResultItem item={item} />
         )}
+        ListHeaderComponent={() => (
+          <View style={styles.listItem}>
+            <Text style={{ fontWeight: 'bold' }}>Concept</Text>
+            <Text style={{ fontWeight: 'bold' }}>Précision</Text>
+          </View>
+        )}
       />
+      <Button title='Retour' style={{ flex: 1 }} onPress={onExit} />
       {/* <Text>{JSON.stringify(result, null, 2)}</Text> */}
-    </ScrollView>
+    </>
   )
 }
 
