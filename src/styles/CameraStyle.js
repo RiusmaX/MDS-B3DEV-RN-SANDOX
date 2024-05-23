@@ -13,5 +13,14 @@ export default StyleSheet.create({
   camera: {
     height,
     width
+  },
+  button: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    position: 'absolute',
+    borderRadius: 50,
+    elevation: 10,
+    zIndex: 50,
+    bottom: 20,
+    padding: 20
   }
 })
