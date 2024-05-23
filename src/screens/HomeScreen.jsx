@@ -1,23 +1,11 @@
-import { Button, Text, View } from 'react-native'
+import { View } from 'react-native'
 import styles from '../styles/HomeScreenStyle'
-import { Camera, CameraType } from 'react-native-camera-kit'
+import CustomCamera from '../components/camera/Camera'
 
-function HomeScreen ({ navigation }) {
-  const handlePress = () => {
-    navigation.navigate('Profile')
-  }
-
+function HomeScreen () {
   return (
     <View style={styles.container}>
-      <Camera
-        cameraType={CameraType.Back} // front/back(default)
-        flashMode='auto'
-      />
-      <Text>HOME SCREEN</Text>
-      <Button
-        title='Go to profile'
-        onPress={handlePress}
-      />
+      <CustomCamera />
     </View>
   )
 }
