@@ -1,11 +1,19 @@
 import { View } from 'react-native'
 import styles from '../styles/HomeScreenStyle'
 import CustomCamera from '../components/camera/Camera'
+import { useState } from 'react'
+import Result from '../components/Result'
 
 function HomeScreen () {
+  const [result, setResult] = useState(null)
+
   return (
     <View style={styles.container}>
-      <CustomCamera />
+      {
+        result
+          ? <Result result={result} />
+          : <CustomCamera onResult={setResult} />
+      }
     </View>
   )
 }

@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { getBase64FromImage } from '../../utils/Images'
 import { identifyImage } from '../../services/ClarifaiApi'
 
-function CustomCamera () {
+function CustomCamera ({ onResult }) {
   const cameraRef = useRef(null)
 
   const handleTakePicture = async () => {
@@ -15,7 +15,7 @@ function CustomCamera () {
       if (image) {
         const base64 = await getBase64FromImage(image.uri)
         const res = await identifyImage(base64)
-        // console.log(res)
+        onResult && onResult(res)
       }
       console.log(image)
     }

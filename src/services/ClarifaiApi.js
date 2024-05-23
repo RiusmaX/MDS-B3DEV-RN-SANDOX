@@ -3,7 +3,7 @@ import axios from 'axios'
 const api = axios.create({
   baseURL: 'https://api.clarifai.com/v2',
   headers: {
-    Authorization: 'Key ',
+    Authorization: 'Key 3544b8c405714f1989cba3dce98c7b94',
     'Content-Type': 'application/json'
   }
 })
@@ -21,8 +21,8 @@ const identifyImage = async (imageBase64) => {
         }
       ]
     })
-    console.log(JSON.stringify(res.data, null, 2))
-    return res
+    // console.log(JSON.stringify(res.data, null, 2))
+    return res.data
   } catch (error) {
     console.log(error)
   }
