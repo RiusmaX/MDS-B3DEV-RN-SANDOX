@@ -10,10 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@dr.pogodin/react-native-fs": "^2.25.0",
     "@react-native-masked-view/masked-view": "^0.3.1",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
+    "clarifai": "^2.9.1",
     "react": "18.2.0",
     "react-native": "0.74.0",
     "react-native-bootsplash": "^5.5.3",
