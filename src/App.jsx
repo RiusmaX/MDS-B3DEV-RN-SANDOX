@@ -13,14 +13,19 @@ import {
 } from 'react-native'
 import MainNavigator from './navigation/Navigator'
 import BootSplash from 'react-native-bootsplash'
+import * as eva from '@eva-design/eva'
+import { ApplicationProvider } from '@ui-kitten/components'
+import theme from './custom-theme.json' // <-- Import app theme
 
 function App () {
   const isDarkMode = useColorScheme() === 'dark'
   return (
-    <NavigationContainer onReady={() => BootSplash.hide({ fade: true })}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <MainNavigator />
-    </NavigationContainer>
+    <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+      <NavigationContainer onReady={() => BootSplash.hide({ fade: true })}>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <MainNavigator />
+      </NavigationContainer>
+    </ApplicationProvider>
   )
 }
 

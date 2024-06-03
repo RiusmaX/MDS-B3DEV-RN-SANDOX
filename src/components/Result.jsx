@@ -1,5 +1,6 @@
-import { Button, FlatList, Text, View } from 'react-native'
+import { View } from 'react-native'
 import styles from '../styles/ResultStyle'
+import { Button, List, Text } from '@ui-kitten/components'
 
 function ResultItem ({ item }) {
   let color = 'black'
@@ -22,7 +23,7 @@ function Result ({ result, onExit }) {
   const concepts = result?.outputs[0]?.data?.concepts
   return (
     <>
-      <FlatList
+      <List
         style={styles.container}
         data={concepts}
         keyExtractor={(item) => item.id}
@@ -36,7 +37,7 @@ function Result ({ result, onExit }) {
           </View>
         )}
       />
-      <Button title='Retour' style={{ flex: 1 }} onPress={onExit} />
+      <Button onPress={onExit}>Retour</Button>
       {/* <Text>{JSON.stringify(result, null, 2)}</Text> */}
     </>
   )
