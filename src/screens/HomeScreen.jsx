@@ -4,7 +4,7 @@ import CustomCamera from '../components/camera/Camera'
 import { useState } from 'react'
 import Result from '../components/Result'
 
-function HomeScreen () {
+function HomeScreen ({ navigation }) {
   const [result, setResult] = useState(null)
 
   return (
@@ -12,7 +12,7 @@ function HomeScreen () {
       {
         result
           ? <Result result={result} onExit={() => setResult(null)} />
-          : <CustomCamera onResult={setResult} />
+          : <CustomCamera onResult={setResult} navigation={navigation} />
       }
     </View>
   )

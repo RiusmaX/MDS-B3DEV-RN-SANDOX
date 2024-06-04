@@ -4,13 +4,28 @@ import ProductsScreen from '../screens/ProductsScreen'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import CustomTabBar from './NavBar'
+import PictureScreen from '../screens/PictureScreen'
 
 const Stack = createStackNavigator()
+
+const CameraStack = createStackNavigator()
+
+const CameraNavigator = () => {
+  return (
+    <CameraStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName='Camera'
+    >
+      <CameraStack.Screen name='Camera' component={HomeScreen} />
+      <CameraStack.Screen name='Picture' component={PictureScreen} />
+    </CameraStack.Navigator>
+  )
+}
 
 const StackNavigator = () => {
   return (
     <Stack.Navigator initialRouteName='Home'>
-      <Stack.Screen name='Home' component={HomeScreen} />
+      <Stack.Screen name='Home' component={CameraNavigator} />
       <Stack.Screen name='Profile' component={ProfileScreen} />
     </Stack.Navigator>
   )
