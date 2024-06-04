@@ -1,12 +1,10 @@
 import ReactNativeBlobUtil from 'react-native-blob-util'
 
-const API_KEY = '9TLto7ZPxUouWQE9FhrUMzwe'
-
 const removeBackground = async (image) => {
   try {
-    const resp = await ReactNativeBlobUtil.fetch('POST', 'https://api.remove.bg/v1.0/removebg', {
+    const resp = await ReactNativeBlobUtil.fetch('POST', process.env.REMOVE_BG_API_URL, {
       'Content-Type': 'multipart/form-data',
-      'X-Api-Key': API_KEY
+      'X-Api-Key': process.env.REMOVE_BG_API_KEY
     }, [
       // append field data from file path
       {
