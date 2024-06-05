@@ -14,13 +14,20 @@ export default StyleSheet.create({
     height,
     width
   },
+  actionButtons: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10,
+    position: 'absolute',
+    zIndex: 50,
+    bottom: 20
+  },
   button: {
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    position: 'absolute',
     borderRadius: 50,
     elevation: 10,
-    zIndex: 50,
-    bottom: 20,
     padding: 20
   }
 })

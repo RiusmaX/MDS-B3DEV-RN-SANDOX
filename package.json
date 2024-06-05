@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "lint": "standard --fix",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "build:android:apk": "cd android && ./gradlew assembleRelease",
+    "build:android:aab": "cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
     "@dr.pogodin/react-native-fs": "^2.25.0",

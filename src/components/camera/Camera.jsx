@@ -1,14 +1,13 @@
-import { TouchableOpacity, View } from 'react-native'
+import { View } from 'react-native'
 import { Camera, CameraType } from 'react-native-camera-kit'
 import styles from '../../styles/CameraStyle'
 import { useRef, useState } from 'react'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { getBase64FromImage } from '../../utils/Images'
-import { identifyImage } from '../../services/ClarifaiApi'
-import { Spinner } from '@ui-kitten/components'
+import ActionsButtons from './ActionsButtons'
 
 function CustomCamera ({ onResult, navigation }) {
   const cameraRef = useRef(null)
+  const [torchEnabled, setTorchEnabled] = useState(false)
+  const [cameraType, setCameraType] = useState(CameraType.Back) // [Back, Front
   const [isLoading, setIsLoading] = useState(false)
 
   const handleTakePicture = async () => {
@@ -16,9 +15,6 @@ function CustomCamera ({ onResult, navigation }) {
     if (cameraRef.current) {
       const image = await cameraRef.current.capture()
       if (image) {
-        // const base64 = await getBase64FromImage(image.uri)
-        // const res = await identifyImage(base64)
-        // onResult && onResult(res)
         navigation.navigate('Picture', { image })
       }
     }
@@ -28,17 +24,19 @@ function CustomCamera ({ onResult, navigation }) {
     <View style={styles.container}>
       <Camera
         ref={cameraRef}
-        cameraType={CameraType.Back} // front/back(default)
+        cameraType={cameraType} // front/back(default)
         style={styles.camera}
+        torchMode={torchEnabled ? 'on' : 'off'}
         zoomMode='on'
       />
-      <TouchableOpacity onPress={handleTakePicture} style={styles.button} disabled={isLoading}>
-        {
-          isLoading
-            ? <Spinner size='large' />
-            : <Icon name='camera' size={30} color='black' />
-        }
-      </TouchableOpacity>
+      <ActionsButtons
+        handleTakePicture={handleTakePicture}
+        isLoading={isLoading}
+        torchEnabled={torchEnabled}
+        setTorchEnabled={setTorchEnabled}
+        cameraType={cameraType}
+        setCameraType={setCameraType}
+      />
     </View>
   )
 }
