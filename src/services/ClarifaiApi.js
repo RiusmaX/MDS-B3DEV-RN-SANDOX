@@ -24,7 +24,7 @@ const identifyImage = async (imageBase64) => {
     // console.log(JSON.stringify(res.data, null, 2))
     return res.data
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 

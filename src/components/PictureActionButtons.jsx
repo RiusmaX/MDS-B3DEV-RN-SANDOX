@@ -8,7 +8,8 @@ function PictureActionButtons (
     handleRecognize,
     handleRemoveBackground,
     handleRetakePicture,
-    isLoading
+    isLoading,
+    isRecognizeEnabled
   }
 
 ) {
@@ -39,7 +40,7 @@ function PictureActionButtons (
       <TouchableOpacity
         onPress={handleRecognize}
         style={{ ...styles.button }}
-        disabled={isLoading}
+        disabled={isLoading || !isRecognizeEnabled}
       >
         <Icon
           name='eye-check'

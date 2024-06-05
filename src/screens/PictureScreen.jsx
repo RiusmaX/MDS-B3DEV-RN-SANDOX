@@ -6,6 +6,8 @@ import { useState } from 'react'
 import styles from '../styles/PictureScreenStyle'
 import PictureActionButtons from '../components/PictureActionButtons'
 
+import { identifyImage } from '../services/ClarifaiApi'
+
 function PictureScreen ({ route, navigation }) {
   const [base64, setBase64] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -17,14 +19,15 @@ function PictureScreen ({ route, navigation }) {
     console.log('Removing background')
     const _base64 = await removeBackground(image)
     setBase64(_base64)
-    // console.log(base64)
-    // console.log(_path)
-    // setPath(_path)
     setIsLoading(false)
   }
 
   const handleRecognize = async () => {
-
+    console.log('Recognizing')
+    const res = await identifyImage(base64)
+    if (res) {
+      navigation.navigate('Result', { res })
+    }
   }
 
   return (
@@ -49,6 +52,7 @@ function PictureScreen ({ route, navigation }) {
         handleRemoveBackground={handleRemoveBackground}
         isLoading={isLoading}
         handleRetakePicture={() => { navigation.goBack() }}
+        isRecognizeEnabled={base64}
       />
     </Layout>
   )
