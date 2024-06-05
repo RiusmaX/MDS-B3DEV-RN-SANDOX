@@ -27,7 +27,6 @@ function CustomCamera ({ onResult, navigation }) {
         cameraType={cameraType} // front/back(default)
         style={styles.camera}
         torchMode={torchEnabled ? 'on' : 'off'}
-        zoomMode='on'
       />
       <ActionsButtons
         handleTakePicture={handleTakePicture}
