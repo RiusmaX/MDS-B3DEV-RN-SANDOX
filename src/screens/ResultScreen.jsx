@@ -103,6 +103,7 @@ function ResultScreen ({ route, navigation }) {
         />
         <Button onPress={handleValidate}>Valider</Button>
         <Button onPress={handleReset}>Réinitialiser</Button>
+        {/* <Button onPress={handleRegenerate}>Regénérer</Button> */}
         <Button status='danger' onPress={() => navigation.goBack()}>Retour</Button>
         {/* <Text>{JSON.stringify(result, null, 2)}</Text> */}
       </KeyboardAvoidingView>
