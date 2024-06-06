@@ -1,6 +1,6 @@
 import { Alert, KeyboardAvoidingView, ScrollView } from 'react-native'
 import styles from '../styles/ResultStyle'
-import { Button, Input } from '@ui-kitten/components'
+import { Button, Input, Spinner } from '@ui-kitten/components'
 import { sanitizeClarifaiResponse } from '../utils/Strings'
 import InputTags from '../components/InputTags'
 import { useState } from 'react'
@@ -26,6 +26,7 @@ import { uploadProductToWooCommerce } from '../services/WCApi'
 function ResultScreen ({ route, navigation }) {
   const { res, base64 } = route.params
   const data = sanitizeClarifaiResponse(res)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     title: data.title,
     description: data.description,
@@ -52,6 +53,7 @@ function ResultScreen ({ route, navigation }) {
 
   const handleValidate = async () => {
     console.log(JSON.stringify(data, null, 2))
+    setIsLoading(true)
     if (formData && formData.title && formData.description && formData.price) {
       const res = await uploadProductToWooCommerce({
         imageBase64: base64,
@@ -72,8 +74,9 @@ function ResultScreen ({ route, navigation }) {
           ])
       }
     } else {
-      console.error('Veuillez remplir tous les champs')
+      Alert.alert('Erreur', 'Veuillez remplir tous les champs')
     }
+    setIsLoading(false)
   }
 
   return (
@@ -112,7 +115,13 @@ function ResultScreen ({ route, navigation }) {
           onRemoveTag={handleRemoveTag}
           onAddTag={handleAddTag}
         />
-        <Button onPress={handleValidate}>Valider</Button>
+        <Button onPress={handleValidate}>
+          {
+            isLoading
+              ? 'Chargement...'
+              : 'Valider'
+          }
+        </Button>
         <Button onPress={handleReset}>Réinitialiser</Button>
         {/* <Button onPress={handleRegenerate}>Regénérer</Button> */}
         <Button status='danger' onPress={() => navigation.goBack()}>Retour</Button>
