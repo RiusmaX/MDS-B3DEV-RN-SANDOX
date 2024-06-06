@@ -22,7 +22,9 @@ function ResultItem ({ item }) {
 function ResultScreen ({ route, navigation }) {
   const { res } = route.params
 
-  const concepts = res?.outputs[0]?.data?.concepts
+  console.log(res?.outputs[0]?.data?.regions[0]?.data?.concepts)
+
+  const concepts = res?.outputs[0]?.data?.regions[0]?.data?.concepts
   return (
     <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <List

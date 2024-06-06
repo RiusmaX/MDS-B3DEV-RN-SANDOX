@@ -10,7 +10,7 @@ const api = axios.create({
 
 const identifyImage = async (imageBase64) => {
   try {
-    const res = await api.post('/users/clarifai/apps/main/models/general-image-recognition/versions/aa7f35c01e0642fda5cf400f543e7c40/outputs', {
+    const res = await api.post('/users/clarifai/apps/main/models/general-image-detection/versions/1580bb1932594c93b7e2e04456af7c6f/outputs', {
       inputs: [
         {
           data: {
@@ -21,7 +21,6 @@ const identifyImage = async (imageBase64) => {
         }
       ]
     })
-    // console.log(JSON.stringify(res.data, null, 2))
     return res.data
   } catch (error) {
     console.error(error)
