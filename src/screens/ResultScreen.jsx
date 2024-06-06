@@ -1,6 +1,7 @@
 import { View } from 'react-native'
 import styles from '../styles/ResultStyle'
 import { Button, Layout, List, Text } from '@ui-kitten/components'
+import { sanitizeClarifaiResponse } from '../utils/Strings'
 
 function ResultItem ({ item }) {
   let color = 'black'
@@ -22,12 +23,12 @@ function ResultItem ({ item }) {
 function ResultScreen ({ route, navigation }) {
   const { res } = route.params
 
-  console.log(res?.outputs[0]?.data?.regions[0]?.data?.concepts)
+  const data = sanitizeClarifaiResponse(res)
 
-  const concepts = res?.outputs[0]?.data?.regions[0]?.data?.concepts
+  console.log(JSON.stringify(data, null, 2))
   return (
     <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <List
+      {/* <List
         style={styles.container}
         data={concepts}
         keyExtractor={(item) => item.id}
@@ -40,7 +41,7 @@ function ResultScreen ({ route, navigation }) {
             <Text style={{ fontWeight: 'bold' }}>Précision</Text>
           </View>
         )}
-      />
+      /> */}
       <Button onPress={() => navigation.goBack()}>Retour</Button>
       {/* <Text>{JSON.stringify(result, null, 2)}</Text> */}
     </Layout>
