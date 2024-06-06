@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, ScrollView } from 'react-native'
+import { Alert, KeyboardAvoidingView, ScrollView } from 'react-native'
 import styles from '../styles/ResultStyle'
 import { Button, Input } from '@ui-kitten/components'
 import { sanitizeClarifaiResponse } from '../utils/Strings'
@@ -53,13 +53,24 @@ function ResultScreen ({ route, navigation }) {
   const handleValidate = async () => {
     console.log(JSON.stringify(data, null, 2))
     if (formData && formData.title && formData.description && formData.price) {
-      await uploadProductToWooCommerce({
+      const res = await uploadProductToWooCommerce({
         imageBase64: base64,
         title: formData.title,
         description: formData.description,
         price: formData.price,
         tags: formData.tags
       })
+      if (res) {
+        Alert.alert(
+          'Produit créé avec succès',
+          'Le produit a été créé avec succès dans WooCommerce',
+          [
+            {
+              text: 'OK',
+              onPress: () => navigation.navigate('Camera')
+            }
+          ])
+      }
     } else {
       console.error('Veuillez remplir tous les champs')
     }

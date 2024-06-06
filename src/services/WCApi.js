@@ -70,6 +70,8 @@ const uploadProductToWooCommerce = async ({ imageBase64, title, description, pri
     })
 
     console.log('Produit créé avec succès:', productResponse.data)
+
+    return productResponse.data
   } catch (error) {
     console.error('Erreur lors de la création du produit:', error.response ? error.response.data : error.message)
   }
