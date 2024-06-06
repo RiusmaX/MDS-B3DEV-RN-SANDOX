@@ -1,34 +1,36 @@
-import { KeyboardAvoidingView, ScrollView, View } from 'react-native'
+import { KeyboardAvoidingView, ScrollView } from 'react-native'
 import styles from '../styles/ResultStyle'
-import { Button, Input, Layout, List, Text } from '@ui-kitten/components'
+import { Button, Input } from '@ui-kitten/components'
 import { sanitizeClarifaiResponse } from '../utils/Strings'
 import InputTags from '../components/InputTags'
 import { useState } from 'react'
+import { uploadProductToWooCommerce } from '../services/WCApi'
 
-function ResultItem ({ item }) {
-  let color = 'black'
-  if (item.value > 0.95) {
-    color = 'green'
-  } else if (item.value > 0.90 && item.value <= 0.95) {
-    color = 'orange'
-  } else if (item.value <= 0.90) {
-    color = 'red'
-  }
-  return (
-    <View style={styles.listItem}>
-      <Text style={{ color, fontWeight: 'bold' }}>{item.name}</Text>
-      <Text style={{ color, fontWeight: 'bold' }}>{(item.value * 100).toFixed(2)}%</Text>
-    </View>
-  )
-}
+// function ResultItem ({ item }) {
+//   let color = 'black'
+//   if (item.value > 0.95) {
+//     color = 'green'
+//   } else if (item.value > 0.90 && item.value <= 0.95) {
+//     color = 'orange'
+//   } else if (item.value <= 0.90) {
+//     color = 'red'
+//   }
+//   return (
+//     <View style={styles.listItem}>
+//       <Text style={{ color, fontWeight: 'bold' }}>{item.name}</Text>
+//       <Text style={{ color, fontWeight: 'bold' }}>{(item.value * 100).toFixed(2)}%</Text>
+//     </View>
+//   )
+// }
 
 function ResultScreen ({ route, navigation }) {
-  const { res } = route.params
+  const { res, base64 } = route.params
   const data = sanitizeClarifaiResponse(res)
   const [formData, setFormData] = useState({
     title: data.title,
     description: data.description,
-    tags: data.tags
+    tags: data.tags,
+    price: ''
   })
 
   const handleAddTag = (tag) => {
@@ -43,11 +45,26 @@ function ResultScreen ({ route, navigation }) {
     setFormData({
       title: data.title,
       description: data.description,
-      tags: data.tags
+      tags: data.tags,
+      price: ''
     })
   }
 
-  console.log(JSON.stringify(data, null, 2))
+  const handleValidate = async () => {
+    console.log(JSON.stringify(data, null, 2))
+    if (formData && formData.title && formData.description && formData.price) {
+      await uploadProductToWooCommerce({
+        imageBase64: base64,
+        title: formData.title,
+        description: formData.description,
+        price: formData.price,
+        tags: formData.tags
+      })
+    } else {
+      console.error('Veuillez remplir tous les champs')
+    }
+  }
+
   return (
     <ScrollView>
       <KeyboardAvoidingView behavior='padding' style={{ flex: 1, padding: 10, gap: 10 }}>
@@ -70,12 +87,21 @@ function ResultScreen ({ route, navigation }) {
           value={formData.description}
           onChangeText={(text) => setFormData({ ...formData, description: text })}
         />
+        <Input
+          style={styles.priceInput}
+          label='Prix'
+          keyboardType='numeric'
+          size='large'
+          placeholder='Prix du produit'
+          value={formData.price}
+          onChangeText={(text) => setFormData({ ...formData, price: text })}
+        />
         <InputTags
           tags={formData.tags}
           onRemoveTag={handleRemoveTag}
           onAddTag={handleAddTag}
         />
-        <Button onPress={() => {}}>Valider</Button>
+        <Button onPress={handleValidate}>Valider</Button>
         <Button onPress={handleReset}>Réinitialiser</Button>
         <Button status='danger' onPress={() => navigation.goBack()}>Retour</Button>
         {/* <Text>{JSON.stringify(result, null, 2)}</Text> */}

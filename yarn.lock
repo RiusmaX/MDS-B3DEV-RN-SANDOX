@@ -9208,6 +9208,7 @@ __metadata:
     "@ui-kitten/components": "npm:^5.3.1"
     axios: "npm:^1.7.2"
     babel-jest: "npm:^29.6.3"
+    buffer: "npm:^6.0.3"
     jest: "npm:^29.6.3"
     react: "npm:18.2.0"
     react-native: "npm:0.74.0"

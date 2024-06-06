@@ -6,7 +6,7 @@ import { useState } from 'react'
 import styles from '../styles/PictureScreenStyle'
 import PictureActionButtons from '../components/PictureActionButtons'
 
-import { identifyImage, identifyImageWithLlava } from '../services/ClarifaiApi'
+import { identifyImageWithLlava } from '../services/ClarifaiApi'
 
 function PictureScreen ({ route, navigation }) {
   const [base64, setBase64] = useState(null)
@@ -28,7 +28,7 @@ function PictureScreen ({ route, navigation }) {
     const res = await identifyImageWithLlava(base64)
     // console.log(JSON.stringify(res, null, 2))
     if (res) {
-      navigation.navigate('Result', { res })
+      navigation.navigate('Result', { res, base64 })
     }
     setIsLoading(false)
   }
