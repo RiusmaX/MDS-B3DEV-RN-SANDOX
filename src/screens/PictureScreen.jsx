@@ -24,11 +24,13 @@ function PictureScreen ({ route, navigation }) {
 
   const handleRecognize = async () => {
     console.log('Recognizing')
+    setIsLoading(true)
     const res = await identifyImageWithLlava(base64)
     // console.log(JSON.stringify(res, null, 2))
     if (res) {
       navigation.navigate('Result', { res })
     }
+    setIsLoading(false)
   }
 
   return (

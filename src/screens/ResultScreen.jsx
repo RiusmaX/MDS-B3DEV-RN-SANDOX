@@ -1,7 +1,9 @@
-import { View } from 'react-native'
+import { KeyboardAvoidingView, ScrollView, View } from 'react-native'
 import styles from '../styles/ResultStyle'
-import { Button, Layout, List, Text } from '@ui-kitten/components'
+import { Button, Input, Layout, List, Text } from '@ui-kitten/components'
 import { sanitizeClarifaiResponse } from '../utils/Strings'
+import InputTags from '../components/InputTags'
+import { useState } from 'react'
 
 function ResultItem ({ item }) {
   let color = 'black'
@@ -22,29 +24,63 @@ function ResultItem ({ item }) {
 
 function ResultScreen ({ route, navigation }) {
   const { res } = route.params
-
   const data = sanitizeClarifaiResponse(res)
+  const [formData, setFormData] = useState({
+    title: data.title,
+    description: data.description,
+    tags: data.tags
+  })
+
+  const handleAddTag = (tag) => {
+    setFormData({ ...formData, tags: [...formData.tags, tag] })
+  }
+
+  const handleRemoveTag = (tag) => {
+    setFormData({ ...formData, tags: formData.tags.filter((t) => t !== tag) })
+  }
+
+  const handleReset = () => {
+    setFormData({
+      title: data.title,
+      description: data.description,
+      tags: data.tags
+    })
+  }
 
   console.log(JSON.stringify(data, null, 2))
   return (
-    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {/* <List
-        style={styles.container}
-        data={concepts}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <ResultItem item={item} />
-        )}
-        ListHeaderComponent={() => (
-          <View style={styles.listItem}>
-            <Text style={{ fontWeight: 'bold' }}>Concept</Text>
-            <Text style={{ fontWeight: 'bold' }}>Précision</Text>
-          </View>
-        )}
-      /> */}
-      <Button onPress={() => navigation.goBack()}>Retour</Button>
-      {/* <Text>{JSON.stringify(result, null, 2)}</Text> */}
-    </Layout>
+    <ScrollView>
+      <KeyboardAvoidingView behavior='padding' style={{ flex: 1, padding: 10, gap: 10 }}>
+        <Input
+          name='title'
+          label='Titre du produit'
+          style={styles.titleInput}
+          size='large'
+          placeholder='Titre du produit'
+          value={formData.title}
+          onChangeText={(text) => setFormData({ ...formData, description: text })}
+        />
+        <Input
+          style={styles.descriptionInput}
+          label='Description du produit'
+          size='large'
+          multiline
+          numberOfLines={10}
+          placeholder='Description du produit'
+          value={formData.description}
+          onChangeText={(text) => setFormData({ ...formData, description: text })}
+        />
+        <InputTags
+          tags={formData.tags}
+          onRemoveTag={handleRemoveTag}
+          onAddTag={handleAddTag}
+        />
+        <Button onPress={() => {}}>Valider</Button>
+        <Button onPress={handleReset}>Réinitialiser</Button>
+        <Button status='danger' onPress={() => navigation.goBack()}>Retour</Button>
+        {/* <Text>{JSON.stringify(result, null, 2)}</Text> */}
+      </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
 
